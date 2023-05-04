@@ -44,7 +44,7 @@ if __name__ == '__main__':
                 if h_level == 5:
                     html.append('<h6>' + line[h_level + 1:].strip() + '</h6>')
             # parse Unordered listing syntax & craete corresposnding elements
-            ul = line[0] == '-'
+            ul = line.strip()[0] == '-'
             if ul:
                 has_ul = True
                 uls.append('<li>' + line[1:].strip() + '</li>')
@@ -56,12 +56,8 @@ if __name__ == '__main__':
         lines = len(html)
         with open(sys.argv[2], 'a') as f:
             for idx, elem in enumerate(html):
-                f.write(elem)
-                # add a new line if not last line
-                # if idx < lines - 1:
-                f.write('\n')
+                f.write(elem + '\n') # add a new line at end of each line
             if has_ul:
                 for idx, elem in enumerate(uls):
-                    f.write(elem)
-                    f.write('\n')
+                    f.write(elem + '\n')
     exit(0)
