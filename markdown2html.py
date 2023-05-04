@@ -21,4 +21,31 @@ if __name__ == '__main__':
     if not os.path.exists(sys.argv[1]):
         print('Missing {}'.format(sys.argv[1]), file=sys.stderr)
         exit(1)
+    with open(sys.argv[1], 'r') as f:
+        lines = f.readlines()
+        # build html headings
+        html = []
+        for line in lines:
+            # determine heading level and create element
+            h_level = line.rfind('#')  # get last '#' index
+            if h_level == 0:
+                html.append('<h1>' + line[h_level + 1:].strip() + '</h1>')
+            if h_level == 1:
+                html.append('<h2>' + line[h_level + 1:].strip() + '</h2>')
+            if h_level == 2:
+                html.append('<h3>' + line[h_level + 1:].strip() + '</h3>')
+            if h_level == 3:
+                html.append('<h4>' + line[h_level + 1:].strip() + '</h4>')
+            if h_level == 4:
+                html.append('<h5>' + line[h_level + 1:].strip() + '</h5>')
+            if h_level == 5:
+                html.append('<h6>' + line[h_level + 1:].strip() + '</h6>')
+        # print(html)
+        lines = len(html)
+        with open(sys.argv[2], 'a') as f:
+            for idx, elem in enumerate(html):
+                f.write(elem)
+                # add a new line if not last line
+                if idx < lines - 1:
+                    f.write('\n')
     exit(0)
