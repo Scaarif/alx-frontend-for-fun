@@ -62,6 +62,5 @@ if __name__ == '__main__':
                 f.write('\n')
             for idx, elem in enumerate(uls):
                 f.write(elem)
-                if idx < len(uls) - 1:
-                    f.write('\n')
+                f.write('\n')
     exit(0)
