@@ -60,7 +60,8 @@ if __name__ == '__main__':
                 # add a new line if not last line
                 # if idx < lines - 1:
                 f.write('\n')
-            for idx, elem in enumerate(uls):
-                f.write(elem)
-                f.write('\n')
+            if has_ul:
+                for idx, elem in enumerate(uls):
+                    f.write(elem)
+                    f.write('\n')
     exit(0)
