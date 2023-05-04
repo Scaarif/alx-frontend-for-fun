@@ -50,7 +50,7 @@ if __name__ == '__main__':
                 uls.append('<li>' + line[1:].strip() + '</li>')
         if has_ul:
             uls.append('</ul>')  # close <ul> list
-            print(uls)
+            # print(uls)
 
         # print(html)
         lines = len(html)
