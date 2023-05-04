@@ -45,7 +45,7 @@ if __name__ == '__main__':
                     html.append('<h6>' + line[h_level + 1:].strip() + '</h6>')
             # parse Unordered listing syntax & craete corresposnding elements
             ul = line.strip()[0] == '-'
-            if ul and not has_ul:
+            if ul:
                 has_ul = True
                 uls.append('<li>' + line[1:].strip() + '</li>')
         if has_ul:
