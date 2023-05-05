@@ -27,6 +27,8 @@ if __name__ == '__main__':
         html = []
         uls = ['<ul>']
         has_ul = False
+        ols = ['<ol>']
+        has_ol = False
         for line in lines:
             # determine heading level and create element
             h_level = line.rfind('#')  # get last '#' index
@@ -48,16 +50,27 @@ if __name__ == '__main__':
             if ul:
                 has_ul = True
                 uls.append('<li>' + line[1:].strip() + '</li>')
+            # parse Ordered listing syntax & create corresponding elements
+            ol = line[0] == '*'
+            if ol:
+                has_ol = True
+                ols.append('<li>' + line[1:].strip() + '</li>')
         if has_ul:
             uls.append('</ul>')  # close <ul> list
             # print(uls)
+        if has_ol:
+            ols.append('</ol>')  # close <ol> list
+            # print(ols)
 
         # print(html)
         lines = len(html)
         with open(sys.argv[2], 'a') as f:
             for idx, elem in enumerate(html):
-                f.write(elem + '\n') # add a new line at end of each line
+                f.write(elem + '\n')  # add a new line at end of each line
             if has_ul:
                 for idx, elem in enumerate(uls):
+                    f.write(elem + '\n')
+            if has_ol:
+                for idx, elem in enumerate(ols):
                     f.write(elem + '\n')
     exit(0)
