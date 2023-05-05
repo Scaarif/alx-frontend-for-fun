@@ -49,12 +49,12 @@ if __name__ == '__main__':
             ul = line[0] == '-'
             if ul:
                 has_ul = True
-                uls.append('<li>' + line[1:].strip() + '</li>')
+                uls.append('\t<li>' + line[1:].strip() + '</li>')
             # parse Ordered listing syntax & create corresponding elements
             ol = line[0] == '*'
             if ol:
                 has_ol = True
-                ols.append('<li>' + line[1:].strip() + '</li>')
+                ols.append('\t<li>' + line[1:].strip() + '</li>')
         if has_ul:
             uls.append('</ul>')  # close <ul> list
             # print(uls)
