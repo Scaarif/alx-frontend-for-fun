@@ -41,6 +41,14 @@ if __name__ == '__main__':
         has_ol = False
         paragraphs = []
         for index, line in enumerate(lines):
+            st = line[:]  # make a copy just in case
+            # check for ** (b) or __(em) and add to line
+            if '_' in line:
+                line = st[:st.find('_')] + '<em>' + st[st.find('_') +
+                                                       2: st.rfind('_') - 1] + '<em/>' + st[st.rfind('_') + 1:]
+            if '*' in line:
+                line = st[:st.find('*')] + '<b>' + st[st.find('*') +
+                                                      2: st.rfind('*') - 1] + '<b/>' + st[st.rfind('*') + 1:]
             # determine heading level and create element
             h_level = line.rfind('#')  # get last '#' index
             if h_level != -1:
@@ -81,10 +89,8 @@ if __name__ == '__main__':
 
         if has_ul:
             uls.append('</ul>')  # close <ul> list
-            # print(uls)
         if has_ol:
             ols.append('</ol>')  # close <ol> list
-            # print(ols)
 
         # print(html)
         lines = len(html)
