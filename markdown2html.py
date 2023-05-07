@@ -13,6 +13,15 @@ import os
 
 
 if __name__ == '__main__':
+    # define a helper function, isParagraph
+    def isParagraph(line, h_level, ol, ul):
+        """ checks if a line is a potential paragraph: i.e.
+            if h_level == -1 and both ol and ul are false
+        """
+        if line not in ['\n', '\r', '\r\n']:
+            return (h_level == -1 and not ol and not ul)
+        return False  # line's a blank line
+
     # check the number of args
     if len(sys.argv) < 3:
         print('Usage: {} README.md README.html'.format(
@@ -23,13 +32,15 @@ if __name__ == '__main__':
         exit(1)
     with open(sys.argv[1], 'r') as f:
         lines = f.readlines()
+        # print(lines)
         # parse/build html headings
         html = []
         uls = ['<ul>']
         has_ul = False
         ols = ['<ol>']
         has_ol = False
-        for line in lines:
+        paragraphs = []
+        for index, line in enumerate(lines):
             # determine heading level and create element
             h_level = line.rfind('#')  # get last '#' index
             if h_level != -1:
@@ -49,12 +60,25 @@ if __name__ == '__main__':
             ul = line[0] == '-'
             if ul:
                 has_ul = True
-                uls.append('\t<li>' + line[1:].strip() + '</li>')
+                uls.append('<li>' + line[1:].strip() + '</li>')
             # parse Ordered listing syntax & create corresponding elements
             ol = line[0] == '*'
             if ol:
                 has_ol = True
-                ols.append('\t<li>' + line[1:].strip() + '</li>')
+                ols.append('<li>' + line[1:].strip() + '</li>')
+            # parse paragraphs
+            if h_level == -1 and not ul and not ol:
+                # default to paragraph & check for empty lines & previous line
+                if line not in ['\n', '\r', '\r\n']:
+                    # if immediate previous line's a paragraph, add a <br/>
+                    if len(paragraphs) and isParagraph(
+                            lines[index - 1], h_level, ol, ul):
+                        paragraphs[-1] = paragraphs[-1][:-5]
+                        paragraphs.append('<br/>')
+                        paragraphs.append(line.strip() + '</p>')
+                    else:
+                        paragraphs.append('<p>' + line.strip() + '</p> ')
+
         if has_ul:
             uls.append('</ul>')  # close <ul> list
             # print(uls)
@@ -73,4 +97,6 @@ if __name__ == '__main__':
             if has_ol:
                 for idx, elem in enumerate(ols):
                     f.write(elem + '\n')
+            for paragraph in paragraphs:
+                f.write(paragraph + '\n')
     exit(0)
