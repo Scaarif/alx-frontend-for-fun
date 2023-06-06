@@ -1,0 +1,2 @@
+$toPrint: "Hello world"; // define a variable ($variable-name: variable-value;)
+@debug $toPrint // log out/print the variable (there's also meta.inspect ...)

@@ -1,0 +1,6 @@
+// create H1 - H5 with font-sizes equal to 1 - 5px respectively using a for loop
+@for $i from 1 through 5 {
+	h#{$i} {
+		font-size: #{$i}px
+	}
+}

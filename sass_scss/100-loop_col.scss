@@ -1,0 +1,8 @@
+// create H1 - H5 with font-sizes equal to 1 - 5px respectively using a for loop
+@use "sass:math"; // for div operation
+
+@for $i from 1 through 4 {
+	.col-#{$i} {
+		width: math.div(1, $i) * 100%;
+	}
+}
